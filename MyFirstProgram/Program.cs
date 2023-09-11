@@ -1,6 +1,10 @@
-Console.WriteLine("This is the beginning of my C# learning");
+using static System.Formats.Asn1.AsnWriter;
 
 var date = DateTime.UtcNow;
+
+// List<string> games = new List<string>();
+// List<string> games = new();
+var games = new List<string>();
 
 string name = GetName();
 
@@ -23,18 +27,23 @@ void Menu(string name)
     do
     {
         Console.Clear();
-        Console.WriteLine(@$"What game would you like to play today?  Choose from the options below:
-                            A - Addition
-                            S - Subtraction
-                            M - Multiplication
-                            D - Division
-                            Q - Quit the program");
+        Console.WriteLine(@$"
+What game would you like to play today?  Choose from the options below:
+V - View Previous Games
+A - Addition
+S - Subtraction
+M - Multiplication
+D - Division
+Q - Quit the program");
         Console.WriteLine("---------------------------------");
 
         var gameSelected = Console.ReadLine();
 
         switch (gameSelected.Trim().ToLower())
         {
+            case "v":
+                GetGames();
+                break;
             case "a":
                 AdditionGame("Addition game");
                 break;
@@ -56,6 +65,20 @@ void Menu(string name)
                 break;
         }
     } while (isGameOn);
+}
+
+void GetGames()
+{
+    Console.Clear();
+    Console.WriteLine("Games History");
+    Console.WriteLine("------------------------");
+    foreach(var game in games)
+    {
+        Console.WriteLine(game);
+    }
+    Console.WriteLine("------------------------\n");
+    Console.WriteLine("Press any key to return to Main Menu");
+    Console.ReadLine();
 }
 
 void DivisionGame(string message)
@@ -88,6 +111,8 @@ void DivisionGame(string message)
 
         if (i == 4) Console.WriteLine($"Game over.  Your final score is {score}");
     }
+
+    AddToHistory(score, "Division");
 }
 
 void MultiplicationGame(string message)
@@ -124,6 +149,8 @@ void MultiplicationGame(string message)
 
         if (i == 4) Console.WriteLine($"Game over.  Your final score is {score}");
     }
+
+    AddToHistory(score, "Multiplication");
 }
 
 void SubtractionGame(string message)
@@ -160,6 +187,8 @@ void SubtractionGame(string message)
 
         if (i == 4) Console.WriteLine($"Game over.  Your final score is {score}");
     }
+
+    AddToHistory(score, "Subtraction");
 }
 
 void AdditionGame(string message)
@@ -200,6 +229,13 @@ void AdditionGame(string message)
             Console.ReadLine();
         }
     }
+
+    AddToHistory(score, "Addition");
+}
+
+void AddToHistory(int gameScore, string gameType)
+{
+    games.Add($"{DateTime.Now} - {gameType}: {gameScore} pts");
 }
 
 int[] GetDivisionNumbers()
