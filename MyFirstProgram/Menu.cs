@@ -6,8 +6,11 @@
 
         internal void ShowMenu(string name, DateTime date)
         {
-            Console.WriteLine("-------------------------------------");
-            Console.WriteLine($"Hello {name}.  It's {date}.  This is your math's game.  That's great that you're working on improving yourself\n");
+            Console.Clear();
+            Console.WriteLine($"Hello {name}.  It's {date}.  This is your math game.  That's great that you're working on improving yourself");
+            Console.WriteLine("Press any key to show menu");
+            Console.ReadLine();
+            Console.WriteLine("\n");
 
             var isGameOn = true;
 
